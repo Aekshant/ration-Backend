@@ -74,9 +74,8 @@ exports.login = async(req, res) => {
 exports.findOne = async(req,res) =>{
     const userId = req.params.id
     console.log(userId);
-    const data = await user.findOne( {
+    const data = await db.family.findOne( {
         where:{id:userId},
-        include: [db.family, db.vendor]
     })
     if(!data)  return res.send({ status:true, data: "Not Exists" })
     res.send({ statu:true, data: data })
@@ -91,7 +90,7 @@ exports.addUser = async(req,res) =>{
         if(income > 100000){
             var typeOfCard = "White"
 
-        }else if(income < 80000){
+        }else if(income < 60000){
             typeOfCard = "Yellow"
 
         }else{

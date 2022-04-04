@@ -5,16 +5,16 @@ module.exports =(sequelize,Sequelize)=>{
         name:{
             type:Sequelize.STRING
         },
-        price:{
+        orangeCardQuantity:{
+            type:Sequelize.FLOAT
+        },
+        yellowCardQuantity:{
+            type:Sequelize.FLOAT
+        },
+        orangeCardPrice:{
             type:Sequelize.INTEGER
         },
-        quantity:{
-            type:Sequelize.INTEGER
-        },
-        maxIncome:{
-            type:Sequelize.INTEGER
-        },
-        vendorId:{
+        yellowCardPrice:{
             type:Sequelize.INTEGER
         }
     })

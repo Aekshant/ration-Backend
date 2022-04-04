@@ -7,7 +7,7 @@ const {checkToken} = require("../middleware/jwt.middleware")
 
 //routers
 router.get("/",checkToken,  findAll)
-// router.get("/:id", findOne)
+router.get("/:id", findOne)
 router.post("/mobile",otp)
 router.post("/", addUser)
 router.post("/login",login)
