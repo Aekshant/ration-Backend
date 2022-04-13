@@ -23,6 +23,7 @@ db.otp = require("./otp.model")(sequelize,Sequelize)
 db.members = require("./members.model")(sequelize,Sequelize)
 db.rhistory = require("./rationDetail.model")(sequelize,Sequelize)
 db.stock = require("./stock.model")(sequelize,Sequelize)
+db.mobileUpdate = require("./rationDetail.model")(sequelize,Sequelize)
 
 //family and members
 db.family.hasMany(db.members,{

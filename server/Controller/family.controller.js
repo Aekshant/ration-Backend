@@ -192,3 +192,5 @@ exports.otpDelete = (req,res) =>{
         res.send("deleted")
     })
 }
+
+
