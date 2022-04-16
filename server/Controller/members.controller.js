@@ -1,5 +1,5 @@
 const db = require("../../model/index")
-
+const {sms} = require("../helper/sms.helper")
 
 
 
@@ -60,16 +60,21 @@ exports.getMember = async(req,res) => {
 exports.verified = async(req,res) => {
     const data = req.body
     console.log(data);
+        const message = "Your Facial Extraction verification is done, Thank you"
+        const dataCheck = await db.family.findOne({where:{id:data.family}})
+        var mobile = dataCheck.mobile
     if(data.role === "Head"){
         const verify = await db.family.update({verified:true},{where:{id:data.id}})
-        if(verify){
+        if(verify[0]=== 1){
+            const smsSend = await sms(mobile, message)
                return res.send({
                     status:true
                 })
             }
     }else{
         const verify = await db.members.update({verified:true},{where:{id:data.id}})
-        if(verify){
+        if(verify[0] === 1){
+            const smsSend = await sms(mobile, message)
                return res.send({
                     status:true
                 })

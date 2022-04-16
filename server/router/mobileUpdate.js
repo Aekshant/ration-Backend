@@ -1,12 +1,12 @@
-const { app } = require("faker/lib/locales/en")
+
 const db = require("../../model/index")
-const Mobile = db.mobileupdate;
+const Mobile = db.mobileUpdate;
 const router = require("express").Router()
 
 
 
 router.get("/",async(req,res)=>{
-    const data = await Mobile.findAll()
+    const data = await Mobile.findAll({where:{done:false}})
     if(data){
         res.send({
             status:1,
@@ -26,21 +26,72 @@ router.get("/:id",(req,res)=>{
 
 router.post("/req",async(req,res)=>{
     const body = req.body;
-
     const data = await Mobile.create(body)
     if(data){
-        res.send({status: success})
+        res.send({status: true})
+    }else{
+        res.send({
+            status:false,
+            message:"try again after some time"
+        })
     }
 })
 
-router.put("/update/:id",async(req,res)=>{
+router.post("/aadhaar", async(req,res)=>{
     const body = req.body;
-    const id = req.params.id
-    const data = await db.family.update(body,{where:{id:id}})
+    const dataCheck = await Mobile.findOne({where:{aadhaar:req.body.aadhaar, done:false}})
+    if(dataCheck){
+        return res.send({
+            status:false,
+            message: "Your request is already Being send"
+        })
+    }
+    const data = await db.family.findOne({where:body})
+    console.log(data);
+    if(data){
+        return res.send({
+            status:true,
+            id: data.id
+        })
+    }else{
+        return res.send({
+            status:false,
+            message:"Your Aadhar number is not found, Plz Register"
+        })
+    }
+})
+
+router.post("/update",async(req,res)=>{
+    const body = req.body;
+    const data = await db.family.update({mobile:body.mobile},{where:{aadhaar:body.aadhaar}})
+    console.log(data);
     if(data[0]==1){
         res.send({
-            status:1,
+            status:true,
             data: data
+        })
+    }else{
+        res.send({
+            status:false,
+            message:"try again after some time"
+        })
+    }
+})
+
+router.post("/updatetrue",async(req,res)=>{
+    const body = JSON.parse(req.body.aadhaar)
+    console.log(body);
+    const data = await Mobile.update({done:true},{where:{aadhaar:body}})
+    console.log(data);
+    if(data[0]==1){
+        res.send({
+            status:true,
+            data: data
+        })
+    }else{
+        res.send({
+            status:false,
+            message:"try again after some time"
         })
     }
 })

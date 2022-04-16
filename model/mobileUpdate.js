@@ -9,7 +9,8 @@ module.exports =(sequelize,Sequelize)=>{
             type:Sequelize.BIGINT
         },
         done:{
-            type:Sequelize.BOOLEAN
+            type:Sequelize.BOOLEAN,
+            defaultValue: false
         }
     })
     return MobileUpdate

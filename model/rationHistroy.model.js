@@ -8,14 +8,9 @@ module.exports =(sequelize,Sequelize)=>{
         amount:{
             type:Sequelize.INTEGER
         },
-        date:{
-            type:Sequelize.STRING
-        },
-        time:{
-            type:Sequelize.STRING
-        },
         paymentType:{
-            type:Sequelize.INTEGER
+            type:Sequelize.STRING,
+            defaultValue: "Offline"
         },
         familyId:{
             type:Sequelize.INTEGER

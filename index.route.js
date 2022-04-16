@@ -9,6 +9,8 @@ const vendor = require("./server/router/vendor.router")
 const distribution = require("./server/router/distribution.router")
 const stock = require("./server/router/stock.router")
 const mobileUpdate = require("./server/router/mobileUpdate")
+const complaint = require("./server/router/complaint.router")
+const rhistory = require("./server/router/rHistroy")
 
 router.use("/family", family)
 router.use("/face",faceAi)
@@ -17,5 +19,7 @@ router.use("/vendor",vendor)
 router.use("/dist",distribution)
 router.use("/stock",stock)
 router.use("/mobile",mobileUpdate)
+router.use("/complaint", complaint)
+router.use("/histroy", rhistory)
 
 module.exports = router;
