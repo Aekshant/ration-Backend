@@ -52,9 +52,10 @@ exports.login = async(req,res) => {
 exports.getOne = async(req,res) => {
     console.log(req.user);
     const getData = await db.vendor.findOne({where:{id:req.user }})
-    getData.otp = null
+    
     console.log(getData);
     if(getData){
+        getData.otp = null
         res.send({
             status:true,
             id:getData.id,
