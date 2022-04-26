@@ -1,6 +1,6 @@
 const db = require("../../model/index")
 const {sms} = require("../helper/sms.helper")
-
+const jwt = require('jsonwebtoken');
 
 
 exports.addMembers = async(req,res)=>{
@@ -25,16 +25,20 @@ exports.getMembers = async(req,res) => {
         where:{familyId:id},
         include:[db.family]
     })
-    if(membersData){
+   
+    if(membersData.length !== 0){
         res.send({
             status:true,
-            data:membersData
+            data:membersData,
+            onlyFamily:false
         })
     }else{
-        res.send({
-            status:false,
-            data:"No Member's Data Found"
-        })
+        const familyData = await db.family.findOne({where:{id:id}})
+        return res.send({
+                status:true,
+                data:familyData,
+                onlyFamily:true
+            })
     }
 }
 

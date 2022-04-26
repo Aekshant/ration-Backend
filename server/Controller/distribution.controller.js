@@ -1,6 +1,5 @@
 const db = require("../../model/index")
 
-
 exports.aadhaar = async(req,res) => {
     console.log(req.params.num)
     const aadhaar = req.params.num

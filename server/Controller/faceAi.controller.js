@@ -26,25 +26,12 @@ exports.input = async(req,res)=>{
         user3: user3,
         user4: user4
        }
-    const findUser = await db.faceAi.findOne({where:{user_id:body.user.id,role:body.user.role}})
-    console.log(findUser);
-    if(findUser){
-        const update = await db.faceAi.update({objData},{where:{user_id:body.user.id,role:body.user.role}})
-        if(update){
-            res.send({
-                status:true
-            })
-            
-        }
-    }else{
     const data = await db.faceAi.create(objData)
         if(data){
             const mobile = body.mobile
-            // const message = ` Your Aadhaar number XXXX XXXX 1846
-            //  was used successfully to carry out Authentication using "Face Recognition".`
             const message = ` Your Aadhaar number XXXX XXXX 1846
-             was used successfully get verified using "Face Recognition".`
-         //  const smsSend = await sms(mobile, message)
+             was successfully get verified using "Face Recognition".`
+          const smsSend = await sms(mobile, message)
         return  res.send({
             status:true
             })
@@ -53,7 +40,7 @@ exports.input = async(req,res)=>{
                 status:false
             })
         }
-    }
+    
     
   }
 
@@ -118,4 +105,46 @@ exports.userDesc = async(req,res)=>{
                     data:"not Found"
                 })
         }
+}
+
+
+exports.update = async(req,res) => {
+    const body = req.body.reqData
+    const descData = body.value
+    if(!body){
+        return res.send({
+            status:false,
+            data: "Try Again, No content" 
+        })
+    }
+    const user1 = JSON.stringify(descData[0])
+    const user2 =JSON.stringify(descData[1])
+    const user3 =JSON.stringify(descData[2])
+    const user4 =JSON.stringify(descData[3])
+  
+      const objData = {
+        user_id:body.user.id,
+        role:body.user.role,
+        family:body.user.family,
+        user1: user1,
+        user2: user2,
+        user3: user3,
+        user4: user4
+       }
+    const findUser = await db.faceAi.findOne({where:{user_id:body.user.id,role:body.user.role}})
+       console.log(findUser.id);
+    if(findUser){
+        const deleteData = await db.faceAi.destroy({where:{id:findUser.id}})
+        console.log(deleteData);
+    }
+        const created = await db.faceAi.create(objData)
+       
+        if(created){
+            res.send({
+                status:true
+            })
+        }else{
+            res.send(false)
+        }
+
 }

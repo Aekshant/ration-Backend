@@ -1,7 +1,7 @@
 const {family} = require("../../model/index")
 const db = require("../../model/index")
-const jwt = require("jsonwebtoken")
 const {sms} = require("../helper/sms.helper")
+const jwt = require("jsonwebtoken")
 
 exports.findAll = async(req,res) =>{
     const data = await family.findAll({

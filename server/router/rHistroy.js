@@ -3,9 +3,10 @@ const db = require("../../model/index")
 const History = db.rhistory;
 const router = require("express").Router()
 const {sms} = require("../helper/sms.helper")
+const {checkToken} = require("../middleware/jwt.middleware")
 
-router.get("/:id", async(req,res)=>{
-    const id = req.params.id
+router.get("/",checkToken, async(req,res)=>{
+    const id = req.user
     const data = await History.findAll({where:{familyId: id}})
     if(data.length != 0){
         return res.send({
