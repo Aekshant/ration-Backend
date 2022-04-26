@@ -16,6 +16,7 @@
     "faker": "^5.5.3",
     "fast-two-sms": "^3.0.0",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.3",
     "mysql2": "^2.3.3",
     "sequelize": "^6.13.0",
     "sequelize-cli": "^6.3.0",

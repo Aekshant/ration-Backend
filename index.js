@@ -2,7 +2,8 @@ const {app, port} = require("./config/express.config")
 require("dotenv").config()
 const db = require("./model/index")
 const http = require("http").createServer(app)
- db.sequelize.sync({ alter: true});
+const moment = require("moment")
+//  db.sequelize.sync({ alter: true});
 
 
 // const io = require("socket.io")(http,{
@@ -44,7 +45,8 @@ const {sms} = require("./server/helper/sms.helper")
 
 app.post('/sms/:id',async(req,res)=>{
   const id = req.params.id
-  const message = req.body.message
+  let message = req.body.message
+  message= message +"  "+"time: "+ moment().utcOffset(330).format("MM-DD-YYYY") +" "+ moment().utcOffset(330).format("HH:mm")
   const data = db.family.findOne({where:{id:id}})
   if(data){
     const mobile = data.mobile
@@ -53,6 +55,15 @@ app.post('/sms/:id',async(req,res)=>{
   }else{
     return res.send(false)
   }  
+})
+
+app.post('/sms',async(req,res)=>{
+  const mobile = req.body.mobile
+  let message = req.body.message
+  message= message +"  "+"time: "+ moment().utcOffset(330).format("MM-DD-YYYY") +" "+ moment().utcOffset(330).format("HH:mm")
+  
+    const smsSend = await sms(mobile, message)
+    return res.send(true)
 })
 
 

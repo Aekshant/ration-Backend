@@ -18,7 +18,12 @@ exports.checkToken = async(req,res,next)=>{
         if(decode){
             console.log("decoded");
             console.log(decode);
-             req.user = decode.data
+            console.log(decode.data.id);
+            if(typeof decode.data === 'object'){
+                req.user = decode.data.id
+            }else{
+                req.user = decode.data
+            }
             next()
             
         }else{

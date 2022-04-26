@@ -2,7 +2,7 @@
 const db = require("../../model/index")
 const Mobile = db.mobileUpdate;
 const router = require("express").Router()
-
+const {sms} = require("../helper/sms.helper")
 
 
 router.get("/",async(req,res)=>{
@@ -27,6 +27,7 @@ router.get("/:id",(req,res)=>{
 router.post("/req",async(req,res)=>{
     const body = req.body;
     const data = await Mobile.create(body)
+    let message = "your Mobile Number Reset request is sent, Plz visit Nearest Ration Store"
     if(data){
         res.send({status: true})
     }else{
@@ -51,7 +52,8 @@ router.post("/aadhaar", async(req,res)=>{
     if(data){
         return res.send({
             status:true,
-            id: data.id
+            id: data.id,
+            mobile: data.mobile
         })
     }else{
         return res.send({
@@ -70,6 +72,7 @@ router.post("/update",async(req,res)=>{
             status:true,
             data: data
         })
+        sms(body.mobile,"Your Mobile number is updated")
     }else{
         res.send({
             status:false,
